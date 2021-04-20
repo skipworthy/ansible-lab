@@ -1,0 +1,7 @@
+---
+- name: c7 update
+  hosts: c7 
+  tasks:
+          - name: update
+            command:
+                    cmd: yum update -y

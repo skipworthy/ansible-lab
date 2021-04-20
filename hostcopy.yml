@@ -1,0 +1,8 @@
+- name : copy jupiter hosts file to managed hosts
+  hosts : all
+  tasks : 
+
+           - name: hosts file
+             copy:
+                     src: /etc/hosts
+                     dest: /etc/hosts

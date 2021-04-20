@@ -1,0 +1,13 @@
+---
+- name: add ansible user
+  hosts: all
+  tasks:
+          - name: add ansible user
+            user:
+                    name: ansible
+                    password: ansible
+                    state: present
+          - name: add ansible to wheel
+            command:
+                    cmd: usermod -g wheel ansible
+

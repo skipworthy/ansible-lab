@@ -1,0 +1,22 @@
+---
+- name: lab snmp install test
+  hosts: all
+  tasks:
+          - name: install snmp
+            command:
+                     cmd: yum -y install net-snpd net-snmp-tools
+                     cmd: systemctl enable snmpd
+                     cmd: systemctl start snmpd
+                     cmd: systemctl stop snmpd
+          - name: move old snmpd.conf
+            command:
+                    cmd: mv /etc/snmp/snmpd.conf /etc/snmp/snmpd.conf.orig
+          - name: copy current config to target
+            copy:    
+                     src: snmpd.conf
+                     dest: /etc/snmp/snmpd.conf   
+          - name: reload snmpd
+            command:
+                     cmd: systemctl reload snmpd
+                     cmd: systemctl start snmpd
+  

@@ -1,0 +1,44 @@
+---
+- name: lab service config
+  hosts: c7
+  tasks:
+          - name: disable firewall
+            service:
+                    name: firewalld
+                    enabled: false
+          - name: enable ssh
+            service:
+                    name: sshd
+                    enabled: true
+          - name: start sshd
+            service:
+                    name: sshd
+                    state: started
+                    enabled: true
+          - name: copy new hosts file
+            copy:
+                    src: /etc/hosts
+                    dest: /etc/hosts          
+          - name: firewallmask
+            command:
+                     cmd: systemctl mask firewalld
+          - name: selinux config
+            copy:
+                    src: selinuxconfig
+                    dest: /etc/selinux/config
+          - name: install and start snmpd
+            command:
+                     cmd: yum -y install net-snpd net-snmp-tools
+                     cmd: systemctl enable snmpd
+                     cmd: systemctl start snmpd
+          - name:  current snmpd.conf 
+            command: 
+                    cmd: mv /etc/snmp/snmpd.conf /etc/snmp/snmpd.conf.orig      
+          - name: copy snmpd config to target
+            copy:    
+                     src: /etc/snmp/snmpd.conf
+                     dest: /etc/snmp/snmpd.conf   
+          - name: reload snmpd
+            command:
+                     cmd: systemctl reload snmpd
+  

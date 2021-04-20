@@ -1,0 +1,7 @@
+---
+- name: lab yum  update
+  hosts: lab
+  tasks:
+          - name: update
+            command:
+                    cmd: yum update -y
